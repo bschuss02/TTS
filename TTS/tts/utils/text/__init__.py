@@ -24,7 +24,7 @@ _CURLY_RE = re.compile(r'(.*?)\{(.+?)\}(.*)')
 # Regular expression matching punctuations, ignoring empty space
 PHONEME_PUNCTUATION_PATTERN = r'['+_phoneme_punctuations+']+'
 
-
+# THIS IS IMPORTANT
 def text2phone(text, language):
     '''
     Convert graphemes to phonemes.
