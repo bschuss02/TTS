@@ -84,6 +84,7 @@ def phoneme_to_sequence(text, cleaner_names, language, enable_eos_bos=False, tp=
 
     sequence = []
     clean_text = _clean_text(text, cleaner_names)
+    # THIS IS IMPORTANT
     to_phonemes = text2phone(clean_text, language)
     if to_phonemes is None:
         print("!! After phoneme conversion the result is None. -- {} ".format(clean_text))

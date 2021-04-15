@@ -11,6 +11,7 @@ def text_to_seqvec(text, CONFIG):
     text_cleaner = [CONFIG.text_cleaner]
     # text ot phonemes to sequence vector
     if CONFIG.use_phonemes:
+        # THIS IS IMPORTANT
         seq = np.asarray(
             phoneme_to_sequence(text, text_cleaner, CONFIG.phoneme_language,
                                 CONFIG.enable_eos_bos_chars,
