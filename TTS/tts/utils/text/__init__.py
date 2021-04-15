@@ -4,11 +4,10 @@ import re
 from packaging import version
 import phonemizer
 from phonemizer.phonemize import phonemize
-from TTS.tts.utils.text import cleaners
-from TTS.tts.utils.text.symbols import make_symbols, symbols, phonemes, _phoneme_punctuations, _bos, \
+from TTS.utils.text import cleaners
+from TTS.utils.text.symbols import make_symbols, symbols, phonemes, _phoneme_punctuations, _bos, \
     _eos
 
-# pylint: disable=unnecessary-comprehension
 # Mappings from symbol to numeric ID and vice versa:
 _symbol_to_id = {s: i for i, s in enumerate(symbols)}
 _id_to_symbol = {i: s for i, s in enumerate(symbols)}
@@ -16,16 +15,45 @@ _id_to_symbol = {i: s for i, s in enumerate(symbols)}
 _phonemes_to_id = {s: i for i, s in enumerate(phonemes)}
 _id_to_phonemes = {i: s for i, s in enumerate(phonemes)}
 
-_symbols = symbols
-_phonemes = phonemes
 # Regular expression matching text enclosed in curly braces:
 _CURLY_RE = re.compile(r'(.*?)\{(.+?)\}(.*)')
 
 # Regular expression matching punctuations, ignoring empty space
 PHONEME_PUNCTUATION_PATTERN = r'['+_phoneme_punctuations+']+'
 
-# THIS IS IMPORTANT
+
 def text2phone(text, language):
+    print("text:", text)
+
+    # save phonemes from text to be re inserted later
+    token_list = []
+    token = ""
+    is_token_growing = False
+    for i,character in enumerate(text):
+        if is_token_growing:
+          token = token + character
+        if character == "$":
+            if is_token_growing:
+                token_list.append((token, i - len(token)))
+                token = ""
+            is_token_growing = not is_token_growing
+
+    print("token_list: ", token_list)
+
+    #remove phonemes from text
+    text_without_phonemes = ""
+    is_deleting = False
+    for i,character in enumerate(text):
+        if character == "$":
+            is_deleting = not is_deleting
+
+        if not is_deleting:
+            text_without_phonemes += character
+    
+    text_without_phonemes = text_without_phonemes.replace("$", "")
+    text = text_without_phonemes
+    print("text_without_phonemes: ",text_without_phonemes)
+    # return text
     '''
     Convert graphemes to phonemes.
     '''
@@ -47,7 +75,7 @@ def text2phone(text, language):
                 for punct in punctuations:
                     ph = ph.replace('| |\n', '|'+punct+'| |', 1)
     elif version.parse(phonemizer.__version__) >= version.parse('2.1'):
-        ph = phonemize(text, separator=seperator, strip=False, njobs=1, backend='espeak', language=language, preserve_punctuation=True, language_switch='remove-flags')
+        ph = phonemize(text, separator=seperator, strip=False, njobs=1, backend='espeak', language=language, preserve_punctuation=True)
         # this is a simple fix for phonemizer.
         # https://github.com/bootphon/phonemizer/issues/32
         if punctuations:
@@ -57,12 +85,21 @@ def text2phone(text, language):
     else:
         raise RuntimeError(" [!] Use 'phonemizer' version 2.1 or older.")
 
+    joined_text = ph
+    displacement = 0
+    for phoneme_text, i in token_list:
+        joined_text = joined_text[:i+displacement] + phoneme_text + joined_text[i+displacement:]
+        displacement += len(phoneme_text)
+
+    print("joined_text: ", joined_text)
+
+    return joined_text
+    print("fuck")
+    print('text: ', text)
+    print('language: ',language)
+    print("ph: ",ph)
     return ph
 
-def intersperse(sequence, token):
-    result = [token] * (len(sequence) * 2 + 1)
-    result[1::2] = sequence
-    return result
 
 def pad_with_eos_bos(phoneme_sequence, tp=None):
     # pylint: disable=global-statement
@@ -75,17 +112,18 @@ def pad_with_eos_bos(phoneme_sequence, tp=None):
 
     return [_phonemes_to_id[_bos]] + list(phoneme_sequence) + [_phonemes_to_id[_eos]]
 
-def phoneme_to_sequence(text, cleaner_names, language, enable_eos_bos=False, tp=None, add_blank=False):
+
+def phoneme_to_sequence(text, cleaner_names, language, enable_eos_bos=False, tp=None):
     # pylint: disable=global-statement
-    global _phonemes_to_id, _phonemes
+    global _phonemes_to_id
     if tp:
         _, _phonemes = make_symbols(**tp)
         _phonemes_to_id = {s: i for i, s in enumerate(_phonemes)}
 
     sequence = []
     clean_text = _clean_text(text, cleaner_names)
-    # THIS IS IMPORTANT
-    # I changed this to text from clean_text
+    
+    # I CHANGED THIS to text from clean_text 
     to_phonemes = text2phone(text, language)
     if to_phonemes is None:
         print("!! After phoneme conversion the result is None. -- {} ".format(clean_text))
@@ -95,17 +133,13 @@ def phoneme_to_sequence(text, cleaner_names, language, enable_eos_bos=False, tp=
     # Append EOS char
     if enable_eos_bos:
         sequence = pad_with_eos_bos(sequence, tp=tp)
-    if add_blank:
-        sequence = intersperse(sequence, len(_phonemes)) # add a blank token (new), whose id number is len(_phonemes)
     return sequence
 
 
-def sequence_to_phoneme(sequence, tp=None, add_blank=False):
+def sequence_to_phoneme(sequence, tp=None):
     # pylint: disable=global-statement
     '''Converts a sequence of IDs back to a string'''
-    global _id_to_phonemes, _phonemes
-    if add_blank:
-        sequence = list(filter(lambda x: x != len(_phonemes), sequence))
+    global _id_to_phonemes
     result = ''
     if tp:
         _, _phonemes = make_symbols(**tp)
@@ -118,7 +152,7 @@ def sequence_to_phoneme(sequence, tp=None, add_blank=False):
     return result.replace('}{', ' ')
 
 
-def text_to_sequence(text, cleaner_names, tp=None, add_blank=False):
+def text_to_sequence(text, cleaner_names, tp=None):
     '''Converts a string of text to a sequence of IDs corresponding to the symbols in the text.
 
       The text can optionally have ARPAbet sequences enclosed in curly braces embedded
@@ -132,7 +166,7 @@ def text_to_sequence(text, cleaner_names, tp=None, add_blank=False):
         List of integers corresponding to the symbols in the text
     '''
     # pylint: disable=global-statement
-    global _symbol_to_id, _symbols
+    global _symbol_to_id
     if tp:
         _symbols, _ = make_symbols(**tp)
         _symbol_to_id = {s: i for i, s in enumerate(_symbols)}
@@ -148,19 +182,13 @@ def text_to_sequence(text, cleaner_names, tp=None, add_blank=False):
             _clean_text(m.group(1), cleaner_names))
         sequence += _arpabet_to_sequence(m.group(2))
         text = m.group(3)
-
-    if add_blank:
-        sequence = intersperse(sequence, len(_symbols)) # add a blank token (new), whose id number is len(_symbols)
     return sequence
 
 
-def sequence_to_text(sequence, tp=None, add_blank=False):
+def sequence_to_text(sequence, tp=None):
     '''Converts a sequence of IDs back to a string'''
     # pylint: disable=global-statement
-    global _id_to_symbol, _symbols
-    if add_blank:
-        sequence = list(filter(lambda x: x != len(_symbols), sequence))
-
+    global _id_to_symbol
     if tp:
         _symbols, _ = make_symbols(**tp)
         _id_to_symbol = {i: s for i, s in enumerate(_symbols)}
