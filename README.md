@@ -1,136 +1,102 @@
-<img src="https://user-images.githubusercontent.com/1402048/104139991-3fd15e00-53af-11eb-8640-3a78a64641dd.png" data-canonical-src="![TTS banner](https://user-images.githubusercontent.com/1402048/104139991-3fd15e00-53af-11eb-8640-3a78a64641dd.png =250x250)
-" width="256" height="256" align="right" />
+<p align="center"><img src="https://user-images.githubusercontent.com/1402048/52643646-c2102980-2edd-11e9-8c37-b72f3c89a640.png" data-canonical-src="![TTS banner](https://user-images.githubusercontent.com/1402048/52643646-c2102980-2edd-11e9-8c37-b72f3c89a640.png =250x250)
+" width="320" height="95" /></p>
 
-# TTS: Text-to-Speech for all.
+<img src="https://travis-ci.org/mozilla/TTS.svg?branch=dev"/>
 
-TTS is a library for advanced Text-to-Speech generation. It's built on the latest research, was designed to achieve the best trade-off among ease-of-training, speed and quality.
-TTS comes with [pretrained models](https://github.com/mozilla/TTS/wiki/Released-Models), tools for measuring dataset quality and already used in **20+ languages** for products and research projects.
+This project is a part of [Mozilla Common Voice](https://voice.mozilla.org/en). TTS aims a deep learning based Text2Speech engine, low in cost and high in quality. To begin with, you can hear a sample synthesized voice from [here](https://soundcloud.com/user-565970875/commonvoice-loc-sens-attn).
 
-[![CircleCI](<https://circleci.com/gh/mozilla/TTS/tree/dev.svg?style=svg>)]()
-[![License](<https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg>)](https://opensource.org/licenses/MPL-2.0)
-[![PyPI version](https://badge.fury.io/py/TTS.svg)](https://badge.fury.io/py/TTS)
+If you are new, you can also find [here](http://www.erogol.com/text-speech-deep-learning-architectures/) a brief post about TTS architectures and their comparisons.
 
-:loudspeaker: [English Voice Samples](https://erogol.github.io/ddc-samples/) and [SoundCloud playlist](https://soundcloud.com/user-565970875/pocket-article-wavernn-and-tacotron2)
+[![](https://sourcerer.io/fame/erogol/erogol/TTS/images/0)](https://sourcerer.io/fame/erogol/erogol/TTS/links/0)[![](https://sourcerer.io/fame/erogol/erogol/TTS/images/1)](https://sourcerer.io/fame/erogol/erogol/TTS/links/1)[![](https://sourcerer.io/fame/erogol/erogol/TTS/images/2)](https://sourcerer.io/fame/erogol/erogol/TTS/links/2)[![](https://sourcerer.io/fame/erogol/erogol/TTS/images/3)](https://sourcerer.io/fame/erogol/erogol/TTS/links/3)[![](https://sourcerer.io/fame/erogol/erogol/TTS/images/4)](https://sourcerer.io/fame/erogol/erogol/TTS/links/4)[![](https://sourcerer.io/fame/erogol/erogol/TTS/images/5)](https://sourcerer.io/fame/erogol/erogol/TTS/links/5)[![](https://sourcerer.io/fame/erogol/erogol/TTS/images/6)](https://sourcerer.io/fame/erogol/erogol/TTS/links/6)[![](https://sourcerer.io/fame/erogol/erogol/TTS/images/7)](https://sourcerer.io/fame/erogol/erogol/TTS/links/7)
 
-:man_cook:  [TTS training recipes](https://github.com/erogol/TTS_recipes)
+## TTS Performance
+<p align="center"><img src="https://camo.githubusercontent.com/9fa79f977015e55eb9ec7aa32045555f60d093d3/68747470733a2f2f646973636f757273652d706161732d70726f64756374696f6e2d636f6e74656e742e73332e6475616c737461636b2e75732d656173742d312e616d617a6f6e6177732e636f6d2f6f7074696d697a65642f33582f362f342f363432386639383065396563373531633234386535393134363038393566373838316165633063365f325f363930783339342e706e67"/></p>
 
-:page_facing_up: [Text-to-Speech paper collection](https://github.com/erogol/TTS-papers)
-
-## 💬 Where to ask questions
-Please use our dedicated channels for questions and discussion. Help is much more valuable if it's shared publicly, so that more people can benefit from it.
-
-| Type                            | Platforms                               |
-| ------------------------------- | --------------------------------------- |
-| 🚨 **Bug Reports**              | [GitHub Issue Tracker]                  |
-| ❔ **FAQ**                       | [TTS/Wiki](https://github.com/mozilla/TTS/wiki/FAQ)                              |
-| 🎁 **Feature Requests & Ideas** | [GitHub Issue Tracker]                  |
-| 👩‍💻 **Usage Questions**          | [Discourse Forum]                       |
-| 🗯 **General Discussion**        | [Discourse Forum] and [Matrix Channel]  |
-
-[github issue tracker]: https://github.com/mozilla/tts/issues
-[discourse forum]: https://discourse.mozilla.org/c/tts/
-[matrix channel]: https://matrix.to/#/!KTePhNahjgiVumkqca:matrix.org?via=matrix.org
-[Tutorials and Examples]: https://github.com/mozilla/TTS/wiki/TTS-Notebooks-and-Tutorials
-
-
-## 🔗 Links and Resources
-| Type                            | Links                               |
-| ------------------------------- | --------------------------------------- |
-| 💾 **Installation** | [TTS/README.md](https://github.com/mozilla/TTS/tree/dev#install-tts)|
-| 👩🏾‍🏫 **Tutorials and Examples**  | [TTS/Wiki](https://github.com/mozilla/TTS/wiki/TTS-Notebooks-and-Tutorials) |
-| 🚀 **Released Models**         | [TTS/Wiki](https://github.com/mozilla/TTS/wiki/Released-Models)|
-| 💻 **Docker Image**            | [Repository by @synesthesiam](https://github.com/synesthesiam/docker-mozillatts)|
-| 🖥️ **Demo Server**             | [TTS/server](https://github.com/mozilla/TTS/tree/master/TTS/server)|
-| 🤖 **Running TTS on Terminal** | [TTS/README.md](https://github.com/mozilla/TTS#example-synthesizing-speech-on-terminal-using-the-released-models)|
-| ✨ **How to contribute**       |[TTS/README.md](#contribution-guidelines)|
-
-## 🥇 TTS Performance
-<p align="center"><img src="https://discourse-prod-uploads-81679984178418.s3.dualstack.us-west-2.amazonaws.com/optimized/3X/6/4/6428f980e9ec751c248e591460895f7881aec0c6_2_1035x591.png" width="800" /></p>
-
-"Mozilla*" and "Judy*" are our models.
 [Details...](https://github.com/mozilla/TTS/wiki/Mean-Opinion-Score-Results)
 
-## Features
-- High performance Deep Learning models for Text2Speech tasks.
-    - Text2Spec models (Tacotron, Tacotron2, Glow-TTS, SpeedySpeech).
-    - Speaker Encoder to compute speaker embeddings efficiently.
-    - Vocoder models (MelGAN, Multiband-MelGAN, GAN-TTS, ParallelWaveGAN, WaveGrad, WaveRNN)
-- Fast and efficient model training.
-- Detailed training logs on console and Tensorboard.
-- Support for multi-speaker TTS.
-- Efficient Multi-GPUs training.
-- Ability to convert PyTorch models to Tensorflow 2.0 and TFLite for inference.
-- Released models in PyTorch, Tensorflow and TFLite.
-- Tools to curate Text2Speech datasets under```dataset_analysis```.
-- Demo server for model testing.
-- Notebooks for extensive model benchmarking.
-- Modular (but not too much) code base enabling easy testing for new ideas.
-
-## Implemented Models
-### Text-to-Spectrogram
+## Provided Models and Methods
+Text-to-Spectrogram:
 - Tacotron: [paper](https://arxiv.org/abs/1703.10135)
 - Tacotron2: [paper](https://arxiv.org/abs/1712.05884)
-- Glow-TTS: [paper](https://arxiv.org/abs/2005.11129)
-- Speedy-Speech: [paper](https://arxiv.org/abs/2008.03802)
 
-### Attention Methods
+Attention Methods:
 - Guided Attention: [paper](https://arxiv.org/abs/1710.08969)
 - Forward Backward Decoding: [paper](https://arxiv.org/abs/1907.09006)
 - Graves Attention: [paper](https://arxiv.org/abs/1907.09006)
 - Double Decoder Consistency: [blog](https://erogol.com/solving-attention-problems-of-tts-models-with-double-decoder-consistency/)
 
-### Speaker Encoder
+Speaker Encoder:
 - GE2E: [paper](https://arxiv.org/abs/1710.10467)
-- Angular Loss: [paper](https://arxiv.org/pdf/2003.11982.pdf)
 
-### Vocoders
-- MelGAN: [paper](https://arxiv.org/abs/1910.06711)
+Vocoders:
+- MelGAN: [paper](https://arxiv.org/abs/1710.10467)
 - MultiBandMelGAN: [paper](https://arxiv.org/abs/2005.05106)
-- ParallelWaveGAN: [paper](https://arxiv.org/abs/1910.11480)
 - GAN-TTS discriminators: [paper](https://arxiv.org/abs/1909.11646)
-- WaveRNN: [origin](https://github.com/fatchord/WaveRNN/)
-- WaveGrad: [paper](https://arxiv.org/abs/2009.00713)
 
 You can also help us implement more models. Some TTS related work can be found [here](https://github.com/erogol/TTS-papers).
 
-## Install TTS
-TTS supports **python >= 3.6, <3.9**.
+## Features
+- High performance Deep Learning models for Text2Speech related tasks.
+    - Text2Speech models (Tacotron, Tacotron2).
+    - Speaker Encoder to compute speaker embeddings efficiently.
+    - Vocoder models (MelGAN, Multiband-MelGAN, GAN-TTS)
+- Support for multi-speaker TTS training.
+- Support for Multi-GPUs training.
+- Ability to convert Torch models to Tensorflow 2.0 for inference.
+- Released pre-trained models.
+- Fast and efficient model training.
+- Detailed training logs on console and Tensorboard.
+- Tools to curate Text2Speech datasets under```dataset_analysis```.
+- Demo server for model testing.
+- Notebooks for extensive model benchmarking.
+- Modular (but not too much) code base enabling easy testing for new ideas.
 
-If you are only interested in [synthesizing speech](https://github.com/mozilla/TTS/tree/dev#example-synthesizing-speech-on-terminal-using-the-released-models) with the released TTS models, installing from PyPI is the easiest option.
+## Requirements and Installation
+Highly recommended to use [miniconda](https://conda.io/miniconda.html) for easier installation.
+  * python>=3.6
+  * pytorch>=0.4.1
+  * librosa
+  * tensorboard
+  * tensorboardX
+  * matplotlib
+  * unidecode
 
-```bash
-pip install TTS
+Install TTS using ```setup.py```. It will install all of the requirements automatically and make TTS available to all the python environment as an ordinary python module.
+
+```python setup.py develop```
+
+Or you can use ```requirements.txt``` to install the requirements only.
+
+```pip install -r requirements.txt```
+
+### Directory Structure
+```
+|- TTS/
+|   |- train.py         (train your TTS model.)
+|   |- distribute.py    (train your TTS model using Multiple GPUs)
+|   |- config.json      (TTS model configuration file)
+|   |- tf/              (Tensorflow 2 utilities and model implementations)
+|   |- layers/          (model layer definitions)
+|   |- models/          (model definitions)
+|   |- notebooks/       (Jupyter Notebooks for model evaluation and parameter selection)
+|   |- data_analysis/   (TTS Dataset analysis tools and notebooks.)
+|   |- utils/           (TTS utilities -io, visualization, data processing etc.-)
+|   |- speaker_encoder/ (Speaker Encoder implementation with the same folder structure.)
+|   |- vocoder/         (Vocoder implementations with the same folder structure.)
 ```
 
-If you plan to code or train models, clone TTS and install it locally.
+### Docker
+A barebone `Dockerfile` exists at the root of the project, which should let you quickly setup the environment. By default, it will start the server and let you query it. Make sure to use `nvidia-docker` to use your GPUs. Make sure you follow the instructions in the [`server README`](server/README.md) before you build your image so that the server can find the model within the image.
 
-```bash
-git clone https://github.com/mozilla/TTS
-pip install -e .
+```
+docker build -t mozilla-tts .
+nvidia-docker run -it --rm -p 5002:5002 mozilla-tts
 ```
 
-## Directory Structure
-```
-|- notebooks/       (Jupyter Notebooks for model evaluation, parameter selection and data analysis.)
-|- utils/           (common utilities.)
-|- TTS
-    |- bin/             (folder for all the executables.)
-      |- train*.py                  (train your target model.)
-      |- distribute.py              (train your TTS model using Multiple GPUs.)
-      |- compute_statistics.py      (compute dataset statistics for normalization.)
-      |- convert*.py                (convert target torch model to TF.)
-    |- tts/             (text to speech models)
-        |- layers/          (model layer definitions)
-        |- models/          (model definitions)
-        |- tf/              (Tensorflow 2 utilities and model implementations)
-        |- utils/           (model specific utilities.)
-    |- speaker_encoder/ (Speaker Encoder models.)
-        |- (same)
-    |- vocoder/         (Vocoder models.)
-        |- (same)
-```
+## Checkpoints and Audio Samples
+Please visit [our wiki.](https://github.com/mozilla/TTS/wiki/Released-Models)
 
-## Sample Model Output
+## Example Model Outputs
 Below you see Tacotron model state after 16K iterations with batch-size 32 with LJSpeech dataset.
 
 > "Recent research at Harvard has shown meditating for as little as 8 weeks can actually increase the grey matter in the parts of the brain responsible for emotional regulation and learning."
@@ -139,12 +105,26 @@ Audio examples: [soundcloud](https://soundcloud.com/user-565970875/pocket-articl
 
 <img src="images/example_model_output.png?raw=true" alt="example_output" width="400"/>
 
-## Datasets and Data-Loading
-TTS provides a generic dataloader easy to use for your custom dataset.
-You just need to write a simple function to format the dataset. Check ```datasets/preprocess.py``` to see some examples.
-After that, you need to set ```dataset``` fields in ```config.json```.
+## Runtime
+The most time-consuming part is the vocoder algorithm (Griffin-Lim) which runs on CPU. By setting its number of iterations lower, you might have faster execution with a small loss of quality. Some of the experimental values are below.
 
-Some of the public datasets that we successfully applied TTS:
+Sentence: "It took me quite a long time to develop a voice, and now that I have it I'm not going to be silent."
+
+Audio length is approximately 6 secs.
+
+| Time (secs) | System | # GL iters | Model
+| ---- |:-------|:-----------| ---- |
+|2.00|GTX1080Ti|30|Tacotron|
+|3.01|GTX1080Ti|60|Tacotron|
+|3.57|CPU|60|Tacotron|
+|5.27|GTX1080Ti|60|Tacotron2|
+|6.50|CPU|60|Tacotron2|
+
+
+## Datasets and Data-Loading
+TTS provides a generic dataloader easy to use for new datasets. You need to write an preprocessor function to integrate your own dataset.Check ```datasets/preprocess.py``` to see some examples. After the function, you need to set ```dataset``` field in ```config.json```. Do not forget other data related fields too.
+
+Some of the open-sourced datasets that we successfully applied TTS, are linked below.
 
 - [LJ Speech](https://keithito.com/LJ-Speech-Dataset/)
 - [Nancy](http://www.cstr.ed.ac.uk/projects/blizzard/2011/lessac_blizzard2011/)
@@ -153,44 +133,7 @@ Some of the public datasets that we successfully applied TTS:
 - [LibriTTS](https://openslr.org/60/)
 - [Spanish](https://drive.google.com/file/d/1Sm_zyBo67XHkiFhcRSQ4YaHPYM0slO_e/view?usp=sharing) - thx! @carlfm01
 
-## Example: Synthesizing Speech on Terminal Using the Released Models.
-
-After the installation, TTS provides a CLI interface for synthesizing speech using pre-trained models. You can either use your own model or the release models under the TTS project.
-
-Listing released TTS models.
-```bash
-tts --list_models
-```
-
-Run a tts and a vocoder model from the released model list. (Simply copy and paste the full model names from the list as arguments for the command below.)
-```bash
-tts --text "Text for TTS" \
-    --model_name "<type>/<language>/<dataset>/<model_name>" \
-    --vocoder_name "<type>/<language>/<dataset>/<model_name>" \
-    --out_path folder/to/save/output/
-```
-
-Run your own TTS model (Using Griffin-Lim Vocoder)
-```bash
-tts --text "Text for TTS" \
-    --model_path path/to/model.pth.tar \
-    --config_path path/to/config.json \
-    --out_path output/path/speech.wav
-```
-
-Run your own TTS and Vocoder models
-```bash
-tts --text "Text for TTS" \
-    --model_path path/to/config.json \
-    --config_path path/to/model.pth.tar \
-    --out_path output/path/speech.wav \
-    --vocoder_path path/to/vocoder.pth.tar \
-    --vocoder_config_path path/to/vocoder_config.json
-```
-
-**Note:** You can use ```./TTS/bin/synthesize.py``` if you prefer running ```tts``` from the TTS project folder.
-
-## Example: Training and Fine-tuning LJ-Speech Dataset
+## Training and Fine-tuning LJ-Speech
 Here you can find a [CoLab](https://gist.github.com/erogol/97516ad65b44dbddb8cd694953187c5b) notebook for a hands-on example, training LJSpeech. Or you can manually follow the guideline below.
 
 To start with, split ```metadata.csv``` into train and validation subsets respectively ```metadata_train.csv``` and ```metadata_val.csv```. Note that for text-to-speech, validation performance might be misleading since the loss value does not directly measure the voice quality to the human ear and it also does not measure the attention module performance. Therefore, running the model with new sentences and listening to the results is the best way to go.
@@ -201,67 +144,46 @@ head -n 12000 metadata_shuf.csv > metadata_train.csv
 tail -n 1100 metadata_shuf.csv > metadata_val.csv
 ```
 
-To train a new model, you need to define your own ```config.json``` to define model details, trainin configuration and more (check the examples). Then call the corressponding train script.
+To train a new model, you need to define your own ```config.json``` file (check the example) and call with the command below. You also set the model architecture in  ```config.json```.
 
-For instance, in order to train a tacotron or tacotron2 model on LJSpeech dataset, follow these steps.
-
-```bash
-python TTS/bin/train_tacotron.py --config_path TTS/tts/configs/config.json
-```
+```train.py --config_path config.json```
 
 To fine-tune a model, use ```--restore_path```.
 
-```bash
-python TTS/bin/train_tacotron.py --config_path TTS/tts/configs/config.json --restore_path /path/to/your/model.pth.tar
-```
+```train.py --config_path config.json --restore_path /path/to/your/model.pth.tar```
 
-To continue an old training run, use ```--continue_path```.
+For multi-GPU training use ```distribute.py```. It enables process based multi-GPU training where each process uses a single GPU.
 
-```bash
-python TTS/bin/train_tacotron.py --continue_path /path/to/your/run_folder/
-```
+```CUDA_VISIBLE_DEVICES="0,1,4" distribute.py --config_path config.json```
 
-For multi-GPU training, call ```distribute.py```. It runs any provided train script in multi-GPU setting.
-
-```bash
-CUDA_VISIBLE_DEVICES="0,1,4" python TTS/bin/distribute.py --script train_tacotron.py --config_path TTS/tts/configs/config.json
-```
-
-Each run creates a new output folder accomodating used ```config.json```, model checkpoints and tensorboard logs.
+Each run creates a new output folder and ```config.json``` is copied under this folder.
 
 In case of any error or intercepted execution, if there is no checkpoint yet under the output folder, the whole folder is going to be removed.
 
 You can also enjoy Tensorboard,  if you point Tensorboard argument```--logdir``` to the experiment folder.
 
-## Contribution Guidelines
+## [Testing and Examples](https://github.com/mozilla/TTS/wiki/Examples-using-TTS)
+
+## Contribution guidelines
 This repository is governed by Mozilla's code of conduct and etiquette guidelines. For more details, please read the [Mozilla Community Participation Guidelines.](https://www.mozilla.org/about/governance/policies/participation/)
 
-1. Create a new branch.
-2. Implement your changes.
-3. (if applicable) Add [Google Style](https://google.github.io/styleguide/pyguide.html#381-docstrings) docstrings.
-4. (if applicable) Implement a test case under ```tests``` folder.
-5. (Optional but Prefered) Run tests. 
-```bash
-./run_tests.sh
-```
-6. Run the linter.
+Please send your Pull Request to ```dev``` branch. Before making a Pull Request, check your changes for basic mistakes and style problems by using a linter. We have cardboardlinter setup in this repository, so for example, if you've made some changes and would like to run the linter on just the changed code, you can use the follow command:
+
 ```bash
 pip install pylint cardboardlint
 cardboardlinter --refspec master
 ```
-7. Send a PR to ```dev``` branch, explain what the change is about.
-8. Let us discuss until we make it perfect :). 
-9. We merge it to the ```dev``` branch once things look good. 
-
-Feel free to ping us at any step you need help using our communication channels.
 
 ## Collaborative Experimentation Guide
 If you like to use TTS to try a new idea and like to share your experiments with the community, we urge you to use the following guideline for a better collaboration.
 (If you have an idea for better collaboration, let us know)
 - Create a new branch.
 - Open an issue pointing your branch.
-- Explain your idea and experiment.
-- Share your results regularly. (Tensorboard log files, audio results, visuals etc.)
+- Explain your experiment.
+- Share your results as you proceed. (Tensorboard log files, audio results, visuals etc.)
+- Use LJSpeech dataset (for English) if you like to compare results with the released models. (It is the most open scalable dataset for quick experimentation)
+
+## [Contact/Getting Help](https://github.com/mozilla/TTS/wiki/Contact-and-Getting-Help)
 
 ## Major TODOs
 - [x] Implement the model.
@@ -270,12 +192,20 @@ If you like to use TTS to try a new idea and like to share your experiments with
 - [x] Train TTS with r=1 successfully.
 - [x] Enable process based distributed training. Similar to (https://github.com/fastai/imagenet-fast/).
 - [x] Adapting Neural Vocoder. TTS works with WaveRNN and ParallelWaveGAN (https://github.com/erogol/WaveRNN and https://github.com/erogol/ParallelWaveGAN)
-- [x] Multi-speaker embedding.
-- [x] Model optimization (model export, model pruning etc.)
+- [ ] Multi-speaker embedding.
+- [ ] Model optimization (model export, model pruning etc.)
 
-### Acknowledgement
+<!--## References
+- [Efficient Neural Audio Synthesis](https://arxiv.org/pdf/1802.08435.pdf)
+- [Attention-Based models for speech recognition](https://arxiv.org/pdf/1506.07503.pdf)
+- [Generating Sequences With Recurrent Neural Networks](https://arxiv.org/pdf/1308.0850.pdf)
+- [Char2Wav: End-to-End Speech Synthesis](https://openreview.net/pdf?id=B1VWyySKx)
+- [VoiceLoop: Voice Fitting and Synthesis via a Phonological Loop](https://arxiv.org/pdf/1707.06588.pdf)
+- [WaveRNN](https://arxiv.org/pdf/1802.08435.pdf)
+- [Faster WaveNet](https://arxiv.org/abs/1611.09482)
+- [Parallel WaveNet](https://arxiv.org/abs/1711.10433)
+-->
+
+### References
 - https://github.com/keithito/tacotron (Dataset pre-processing)
 - https://github.com/r9y9/tacotron_pytorch (Initial Tacotron architecture)
-- https://github.com/kan-bayashi/ParallelWaveGAN (vocoder library)
-- https://github.com/jaywalnut310/glow-tts (Original Glow-TTS implementation)
-- https://github.com/fatchord/WaveRNN/ (Original WaveRNN implementation)

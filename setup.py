@@ -6,49 +6,37 @@ import shutil
 import subprocess
 import sys
 
-import numpy
-import setuptools.command.build_py
+from setuptools import setup, find_packages
 import setuptools.command.develop
+import setuptools.command.build_py
 
-from setuptools import find_packages, setup
-from distutils.extension import Extension
-from Cython.Build import cythonize
 
-# parameters for wheeling server.
 parser = argparse.ArgumentParser(add_help=False, allow_abbrev=False)
-parser.add_argument('--checkpoint',
-                    type=str,
-                    help='Path to checkpoint file to embed in wheel.')
-parser.add_argument('--model_config',
-                    type=str,
-                    help='Path to model configuration file to embed in wheel.')
+parser.add_argument('--checkpoint', type=str, help='Path to checkpoint file to embed in wheel.')
+parser.add_argument('--model_config', type=str, help='Path to model configuration file to embed in wheel.')
 args, unknown_args = parser.parse_known_args()
 
 # Remove our arguments from argv so that setuptools doesn't see them
 sys.argv = [sys.argv[0]] + unknown_args
 
-version = '0.0.9.2'
+version = '0.0.3'
+
+# Adapted from https://github.com/pytorch/pytorch
 cwd = os.path.dirname(os.path.abspath(__file__))
-
-# Handle Cython code
-# def find_pyx(path='.'):
-#     pyx_files = []
-#     for root, _, filenames in os.walk(path):
-#         for fname in filenames:
-#             if fname.endswith('.pyx'):
-#                 pyx_files.append(os.path.join(root, fname))
-#     return pyx_files
-
-
-# def find_cython_extensions(path="."):
-#     exts = cythonize(find_pyx(path), language_level=3)
-#     for ext in exts:
-#         ext.include_dirs = [numpy.get_include()]
-
-#     return exts
+if os.getenv('TTS_PYTORCH_BUILD_VERSION'):
+    version = os.getenv('TTS_PYTORCH_BUILD_VERSION')
+else:
+    try:
+        sha = subprocess.check_output(
+            ['git', 'rev-parse', 'HEAD'], cwd=cwd).decode('ascii').strip()
+        version += '+' + sha[:7]
+    except subprocess.CalledProcessError:
+        pass
+    except IOError:  # FileNotFoundError for python 3
+        pass
 
 
-class build_py(setuptools.command.build_py.build_py):  # pylint: disable=too-many-ancestors
+class build_py(setuptools.command.build_py.build_py):
     def run(self):
         self.create_version_file()
         setuptools.command.build_py.build_py.run(self)
@@ -68,11 +56,11 @@ class develop(setuptools.command.develop.develop):
 
 
 # The documentation for this feature is in server/README.md
-package_data = ['TTS/server/templates/*']
+package_data = ['server/templates/*']
 
 if 'bdist_wheel' in unknown_args and args.checkpoint and args.model_config:
     print('Embedding model in wheel file...')
-    model_dir = os.path.join('TTS', 'server', 'model')
+    model_dir = os.path.join('server', 'model')
     tts_dir = os.path.join(model_dir, 'tts')
     os.makedirs(tts_dir, exist_ok=True)
     embedded_checkpoint_path = os.path.join(tts_dir, 'checkpoint.pth.tar')
@@ -81,34 +69,22 @@ if 'bdist_wheel' in unknown_args and args.checkpoint and args.model_config:
     shutil.copy(args.model_config, embedded_config_path)
     package_data.extend([embedded_checkpoint_path, embedded_config_path])
 
-
-def pip_install(package_name):
-    subprocess.call([sys.executable, '-m', 'pip', 'install', package_name])
-
-
-requirements = open(os.path.join(cwd, 'requirements.txt'), 'r').readlines()
-with open('README.md', "r", encoding="utf-8") as readme_file:
-    README = readme_file.read()
-
-exts = [Extension(name='TTS.tts.layers.glow_tts.monotonic_align.core',
-                  sources=["TTS/tts/layers/glow_tts/monotonic_align/core.pyx"])]
 setup(
     name='TTS',
     version=version,
     url='https://github.com/mozilla/TTS',
-    author='Eren Gölge',
-    author_email='egolge@mozilla.com',
     description='Text to Speech with Deep Learning',
-    long_description=README,
-    long_description_content_type="text/markdown",
     license='MPL-2.0',
-    # cython
-    include_dirs=numpy.get_include(),
-    ext_modules=cythonize(exts, language_level=3),
-    # ext_modules=find_cython_extensions(),
-    # package
-    include_package_data=True,
-    packages=find_packages(include=['TTS*']),
+    entry_points={
+        'console_scripts': [
+            'tts-server = TTS.server.server:main'
+        ]
+    },
+    package_dir={'': 'tts_namespace'},
+    packages=find_packages('tts_namespace'),
+    package_data={
+        'TTS': package_data,
+    },
     project_urls={
         'Documentation': 'https://github.com/mozilla/TTS/wiki',
         'Tracker': 'https://github.com/mozilla/TTS/issues',
@@ -118,33 +94,25 @@ setup(
     cmdclass={
         'build_py': build_py,
         'develop': develop,
-        # 'build_ext': build_ext
     },
-    install_requires=requirements,
-    python_requires='>=3.6.0, <3.9',
-    entry_points={
-        'console_scripts': [
-            'tts=TTS.bin.synthesize:main',
-            'tts-server = TTS.server.server:main'
-        ]
-    },
-    classifiers=[
-        "Programming Language :: Python",
-        "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7",
-        "Programming Language :: Python :: 3.8",
-        'Development Status :: 3 - Alpha',
-        "Intended Audience :: Science/Research",
-        "Intended Audience :: Developers",
-        "Operating System :: POSIX :: Linux",
-        'License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)',
-        "Topic :: Software Development",
-        "Topic :: Software Development :: Libraries :: Python Modules",
-        "Topic :: Multimedia :: Sound/Audio :: Speech",
-        "Topic :: Multimedia :: Sound/Audio",
-        "Topic :: Multimedia",
-        "Topic :: Scientific/Engineering :: Artificial Intelligence"
+    install_requires=[
+        "scipy>=0.19.0",
+        "torch>=1.5",
+        "numpy>=1.16.0",
+        "librosa==0.6.2",
+        "unidecode==0.4.20",
+        "attrdict",
+        "tensorboardX",
+        "matplotlib",
+        "Pillow",
+        "flask",
+        "tqdm",
+        "inflect",
+        "bokeh==1.4.0",
+        "soundfile",
+        "phonemizer @ https://github.com/bootphon/phonemizer/tarball/master",
     ],
-    zip_safe=False
+    dependency_links=[
+        "http://github.com/bootphon/phonemizer/tarball/master#egg=phonemizer-1.0.1"
+    ]
 )

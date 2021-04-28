@@ -6,16 +6,13 @@ if [[ ! -f tests/outputs/checkpoint_10.pth.tar ]]; then
     exit 1
 fi
 
-rm -f dist/*.whl
-python setup.py --quiet bdist_wheel --checkpoint tests/outputs/checkpoint_10.pth.tar --model_config tests/outputs/dummy_model_config.json
-
 python -m venv /tmp/venv
 source /tmp/venv/bin/activate
 pip install --quiet --upgrade pip setuptools wheel
-pip install --quiet dist/TTS*.whl
 
-# this is related to https://github.com/librosa/librosa/issues/1160
-pip install numba==0.48
+rm -f dist/*.whl
+python setup.py --quiet bdist_wheel --checkpoint tests/outputs/checkpoint_10.pth.tar --model_config tests/outputs/dummy_model_config.json
+pip install --quiet dist/TTS*.whl
 
 python -m TTS.server.server &
 SERVER_PID=$!
