@@ -23,7 +23,7 @@ PHONEME_PUNCTUATION_PATTERN = r'['+_phoneme_punctuations+']+'
 
 
 def text2phone(text, language):
-    print("text:", text)
+    # print("text:", text)
 
     # save phonemes from text to be re inserted later
     token_list = []
@@ -38,7 +38,7 @@ def text2phone(text, language):
                 token = ""
             is_token_growing = not is_token_growing
 
-    print("token_list: ", token_list)
+    # print("token_list: ", token_list)
 
     # remove phonemes from text
     text_without_phonemes = ""
@@ -52,7 +52,7 @@ def text2phone(text, language):
 
     text_without_phonemes = text_without_phonemes.replace("$", "")
     text = text_without_phonemes
-    print("text_without_phonemes: ", text_without_phonemes)
+    # print("text_without_phonemes: ", text_without_phonemes)
     # return text
     '''
     Convert graphemes to phonemes.
@@ -95,14 +95,14 @@ def text2phone(text, language):
             phoneme_text + joined_text[i+displacement:]
         displacement += len(phoneme_text)
 
-    print("joined_text: ", joined_text)
+    # print("joined_text: ", joined_text)
 
     return joined_text
-    print("fuck")
-    print('text: ', text)
-    print('language: ', language)
-    print("ph: ", ph)
-    return ph
+    # print("fuck")
+    # print('text: ', text)
+    # print('language: ', language)
+    # print("ph: ", ph)
+    # return ph
 
 
 def pad_with_eos_bos(phoneme_sequence, tp=None):
