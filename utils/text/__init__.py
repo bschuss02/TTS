@@ -23,35 +23,38 @@ PHONEME_PUNCTUATION_PATTERN = r'['+_phoneme_punctuations+']+'
 
 
 def text2phone(text, language):
-    # print("text:", text)
+    print('PRINTING FROM TTS -> text', text)
 
-    # save phonemes from text to be re inserted later
-    token_list = []
-    token = ""
-    is_token_growing = False
-    for i, character in enumerate(text):
-        if is_token_growing:
-            token = token + character
-        if character == "$":
-            if is_token_growing:
-                token_list.append((token, i - len(token)))
-                token = ""
-            is_token_growing = not is_token_growing
+    # # fuck
+    # # print("text:", text)
 
-    # print("token_list: ", token_list)
+    # # save phonemes from text to be re inserted later
+    # token_list = []
+    # token = ""
+    # is_token_growing = False
+    # for i, character in enumerate(text):
+    #     if is_token_growing:
+    #         token = token + character
+    #     if character == "$":
+    #         if is_token_growing:
+    #             token_list.append((token, i - len(token)))
+    #             token = ""
+    #         is_token_growing = not is_token_growing
 
-    # remove phonemes from text
-    text_without_phonemes = ""
-    is_deleting = False
-    for i, character in enumerate(text):
-        if character == "$":
-            is_deleting = not is_deleting
+    # # print("token_list: ", token_list)
 
-        if not is_deleting:
-            text_without_phonemes += character
+    # # remove phonemes from text
+    # text_without_phonemes = ""
+    # is_deleting = False
+    # for i, character in enumerate(text):
+    #     if character == "$":
+    #         is_deleting = not is_deleting
 
-    text_without_phonemes = text_without_phonemes.replace("$", "")
-    text = text_without_phonemes
+    #     if not is_deleting:
+    #         text_without_phonemes += character
+
+    # text_without_phonemes = text_without_phonemes.replace("$", "")
+    # text = text_without_phonemes
     # print("text_without_phonemes: ", text_without_phonemes)
     # return text
     '''
@@ -88,16 +91,19 @@ def text2phone(text, language):
     else:
         raise RuntimeError(" [!] Use 'phonemizer' version 2.1 or older.")
 
-    joined_text = ph
-    displacement = 0
-    for phoneme_text, i in token_list:
-        joined_text = joined_text[:i+displacement] + \
-            phoneme_text + joined_text[i+displacement:]
-        displacement += len(phoneme_text)
+    print('PRINTING FROM TTS -> ph', ph)
 
-    # print("joined_text: ", joined_text)
+    return ph
+    # joined_text = ph
+    # displacement = 0
+    # for phoneme_text, i in token_list:
+    #     joined_text = joined_text[:i+displacement] + \
+    #         phoneme_text + joined_text[i+displacement:]
+    #     displacement += len(phoneme_text)
 
-    return joined_text
+    # # print("joined_text: ", joined_text)
+
+    # return joined_text
     # print("fuck")
     # print('text: ', text)
     # print('language: ', language)
