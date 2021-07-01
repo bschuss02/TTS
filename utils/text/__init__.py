@@ -23,6 +23,7 @@ PHONEME_PUNCTUATION_PATTERN = r'['+_phoneme_punctuations+']+'
 
 
 def text2phone(text, language):
+    print("STARTING")
     print('PRINTING FROM TTS -> text', text)
 
     # # fuck
