@@ -23,7 +23,10 @@ PHONEME_PUNCTUATION_PATTERN = r'['+_phoneme_punctuations+']+'
 
 
 def text2phone(text, language):
-    print("DOING NOTHING")
+    print('PRINTING FROM TTS -> language', language)
+
+    print("DOING NOTHING BUT PRINTING LANGUAGE")
+    print('PRINTING FROM TTS -> text', text)
     return text
 
     # # fuck
@@ -59,42 +62,42 @@ def text2phone(text, language):
     # print("text_without_phonemes: ", text_without_phonemes)
     # return text
     '''
-    # Convert graphemes to phonemes.
-    # '''
-    # seperator = phonemizer.separator.Separator(' |', '', '|')
-    # # try:
-    # punctuations = re.findall(PHONEME_PUNCTUATION_PATTERN, text)
-    # if version.parse(phonemizer.__version__) < version.parse('2.1'):
-    #     ph = phonemize(text, separator=seperator, strip=False,
-    #                    njobs=1, backend='espeak', language=language)
-    #     ph = ph[:-1].strip()  # skip the last empty character
-    #     # phonemizer does not tackle punctuations. Here we do.
-    #     # Replace \n with matching punctuations.
-    #     if punctuations:
-    #         # if text ends with a punctuation.
-    #         if text[-1] == punctuations[-1]:
-    #             for punct in punctuations[:-1]:
-    #                 ph = ph.replace('| |\n', '|'+punct+'| |', 1)
-    #                 ph = ph + punctuations[-1]
-    #         else:
-    #             for punct in punctuations:
-    #                 ph = ph.replace('| |\n', '|'+punct+'| |', 1)
-    # elif version.parse(phonemizer.__version__) >= version.parse('2.1'):
-    #     ph = phonemize(text, separator=seperator, strip=False, njobs=1,
-    #                    backend='espeak', language=language, preserve_punctuation=True)
-    #     # this is a simple fix for phonemizer.
-    #     # https://github.com/bootphon/phonemizer/issues/32
-    #     if punctuations:
-    #         for punctuation in punctuations:
-    #             ph = ph.replace(f"| |{punctuation} ", f"|{punctuation}| |").replace(
-    #                 f"| |{punctuation}", f"|{punctuation}| |")
-    #         ph = ph[:-3]
-    # else:
-    #     raise RuntimeError(" [!] Use 'phonemizer' version 2.1 or older.")
+    Convert graphemes to phonemes.
+    '''
+    seperator = phonemizer.separator.Separator(' |', '', '|')
+    # try:
+    punctuations = re.findall(PHONEME_PUNCTUATION_PATTERN, text)
+    if version.parse(phonemizer.__version__) < version.parse('2.1'):
+        ph = phonemize(text, separator=seperator, strip=False,
+                       njobs=1, backend='espeak', language=language)
+        ph = ph[:-1].strip()  # skip the last empty character
+        # phonemizer does not tackle punctuations. Here we do.
+        # Replace \n with matching punctuations.
+        if punctuations:
+            # if text ends with a punctuation.
+            if text[-1] == punctuations[-1]:
+                for punct in punctuations[:-1]:
+                    ph = ph.replace('| |\n', '|'+punct+'| |', 1)
+                    ph = ph + punctuations[-1]
+            else:
+                for punct in punctuations:
+                    ph = ph.replace('| |\n', '|'+punct+'| |', 1)
+    elif version.parse(phonemizer.__version__) >= version.parse('2.1'):
+        ph = phonemize(text, separator=seperator, strip=False, njobs=1,
+                       backend='espeak', language=language, preserve_punctuation=True)
+        # this is a simple fix for phonemizer.
+        # https://github.com/bootphon/phonemizer/issues/32
+        if punctuations:
+            for punctuation in punctuations:
+                ph = ph.replace(f"| |{punctuation} ", f"|{punctuation}| |").replace(
+                    f"| |{punctuation}", f"|{punctuation}| |")
+            ph = ph[:-3]
+    else:
+        raise RuntimeError(" [!] Use 'phonemizer' version 2.1 or older.")
 
-    # print('PRINTING FROM TTS -> ph', ph)
+    print('PRINTING FROM TTS -> ph', ph)
 
-    # return ph
+    return ph
     # joined_text = ph
     # displacement = 0
     # for phoneme_text, i in token_list:
